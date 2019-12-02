@@ -1,0 +1,41 @@
+def file(filename)
+# read the string filename
+filename = gets.strip
+
+        all_time_date =[]
+         file_read = File.readlines(filename) 
+        # all_time_date = file_read.map{ |x| ((x.split(']'))[0].split('['))[1][0..-7] }
+        # mul_time_date = all_time_date.group_by{ |e| e }.select { |k, v| v.size > 1 }.map(&:first)
+        # File.open("req_#{filename}", 'w') {|f| f.write(mul_time_date.join("\n")) }
+
+        file_read.each_with_index do |row, idx|
+            date_part = row.split(']')
+            date_part = date_part[0].split('[')
+            date_part = date_part[1][0..-7]
+            all_time_date.append(date_part)
+        end
+
+
+        row_before = ""
+        full_row_before = ""
+        mul_time_date =[]
+        qtd = 0
+
+            all_time_date.sort.each_with_index do |row, idx|
+            if row.to_s == row_before.to_s
+                qtd = qtd + 1
+                if qtd.to_i == 2  
+                    mul_time_date.append(row)
+                end
+            else
+                row_before  = row
+                qtd = 1
+            end
+        end
+
+         File.open("req_#{filename}", 'w') {|f| f.write(mul_time_date.join("\n")) }
+    
+
+
+
+end
